@@ -1,34 +1,36 @@
 package BankingApplication;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 //CLASSE CONTA + ATRIBUTOS PRIVADOS
-public abstract class Conta {
+public class Conta {
 	
-	private String tipoConta;
 	private int numeroAgencia;
 	private int numeroConta;
 	private double saldo;
+	private int senha;
 	private Pessoa pessoa;
 		
 	//CONSTRUTOR PARA CRIAR NOSSO OBJETO, INICIALIZANDO SEUS ATRIBUTOS:
-	public Conta(String tipoConta, int numeroAgencia, int numeroConta, Double saldo, Pessoa pessoa) {
-		this.tipoConta = tipoConta;
+	public Conta(int senha, int numeroAgencia, int numeroConta, Double saldo, Pessoa pessoa) {
 		this.numeroAgencia = numeroAgencia;
 		this.numeroConta = numeroConta;
 		this.saldo = saldo;
+		this.senha = senha;
 		this.pessoa = pessoa;
 	}
 	
 	public Conta() {
 		
-	}
+	}	
 	
-	
-	public String getTipoConta() {
-		return tipoConta;
+	public int getSenha() {
+		return senha;
 	}
 
-	public void setTipoConta(String tipoConta) {
-		this.tipoConta = tipoConta;
+	public void setSenha(int senha) {
+		this.senha = senha;
 	}
 
 	public int getNumeroAgencia() {
@@ -62,64 +64,33 @@ public abstract class Conta {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-	
-	public void depositar(Double valor) {
-		if(valor > 0) {
-			setSaldo(getSaldo() + valor);
-			System.out.println("Seu depósito foi realizado com sucesso");
-		}else {
-			System.out.println("Seu depósito não foi realizado");
-		}
-	}
-	
-	public void enviaPix(Double valor) {
-		if(valor > 0) {
-			setSaldo(getSaldo() + valor);
-			System.out.println("Seu pix foi realizado com sucesso");
-		}else {
-			System.out.println("Seu pix não foi realizado");
-		}
-	}
-	
-	public void aplicar(Double valor) {
-		if(valor > 0) {
-			setSaldo(getSaldo() + valor);
-			System.out.println("Sua aplicação foi realizada com sucesso");
+		
+	public void encerrarConta(Conta conta, ArrayList<ContaCorrente> contasC) {
+		try (Scanner input = new Scanner(System.in)) {
+			System.out.println("Você tem certeza que quer encerrar sua conta? \n1. Sim \n2. Não");
+			int opcao = input.nextInt();
+			if(opcao == 1) {
+				contasC.remove(conta);
+				System.out.println("Conta corrente encerrada");
+			}else {
+				System.out.println("A conta não foi encerrada. Tente novamente");
+			}
 		}
 	}	
 	
-	public void sacar(Double valor) {
-		if(valor > 0 && this.getSaldo()>= valor) {
-			setSaldo(getSaldo() - valor);
-			System.out.println("Saque realizado com sucesso");
-		}else {
-			System.out.println("Não foi possível realizar o saque");
+	public void encerrarConta(ArrayList<ContaPoupanca> contasP, Conta conta) {
+		try (Scanner input = new Scanner(System.in)) {
+			System.out.println("Você tem certeza que quer encerrar sua conta? \n1. Sim \n2. Não");
+			int opcao = input.nextInt();
+			if(opcao == 1) {
+				contasP.remove(conta);
+				System.out.println("Conta Poupanca encerrada");
+			}else {
+				System.out.println("A conta não foi encerrada. Tente novamente");
+			}
 		}
-	}
-	
-	public void resgatar(Double valor) {
-		if(valor > 0 && this.getSaldo()>= valor) {
-			setSaldo(getSaldo() - valor);
-			System.out.println("Saque realizado com sucesso");
-		}else {
-			System.out.println("Não foi possível realizar o saque");
-		}
-	}
-
-	public double consultaSaldo(Double saldo) {
-		return getSaldo();
-	}
-	
-	public void encerrarConta() {
-		
 	}	
-	
-	public void retornarMenuInicial() {
-		
-	}
 }
-
-
 
 
 
