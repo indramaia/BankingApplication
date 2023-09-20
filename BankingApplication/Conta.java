@@ -84,20 +84,10 @@ public class Conta {
 			int opcao = input.nextInt();
 			if(opcao == 1) {
 				contasP.remove(conta);
-				System.out.println("Conta Poupanca encerrada");
+				System.out.println("Conta Poupança encerrada");
 			}else {
 				System.out.println("A conta não foi encerrada. Tente novamente");
 			}
 		}
 	}	
 }
-
-
-
-
-
-
-
-
-
-

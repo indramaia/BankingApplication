@@ -44,45 +44,46 @@ public class Sistema {
 
 	public static void abrirConta() {
 		Random aleatorios = new Random();
-		Scanner inputs = new Scanner(System.in);
-		Scanner inputi = new Scanner(System.in);
-
+		Scanner input = new Scanner(System.in);
+		Scanner input2 = new Scanner(System.in);
+		
 		System.out.println("Nome completo: ");
-		String nome = inputs.nextLine();
+		String nome = input2.nextLine();
 
 		System.out.println("CPF: ");
-		int cpf = inputi.nextInt();
+		int cpf = input.nextInt();
 
 		System.out.println("Endereço: ");
-		String endereco = inputs.nextLine();
+		String endereco  = input2.nextLine();		
 
 		System.out.println("Telefone: ");
-		int telefone = inputi.nextInt();
+		int telefone = input.nextInt();
 
 		System.out.println("Senha: ");
-		int senha = inputi.nextInt();
+		int senha = input.nextInt();
 
 		double saldo = 0.0;
-
 		int numeroAgencia = aleatorios.nextInt(12345 + 1);
 		int numeroConta = aleatorios.nextInt(123456 + 1);
 
 		Pessoa pessoa = new Pessoa(nome, cpf, endereco, telefone);
 
 		System.out.println("Que tipo de conta deseja abrir? \n1. Conta Corrente \n2. Conta Poupança");
-		int opcaoConta = inputi.nextInt();
+		int opcaoConta = input.nextInt();
+		
 		if (opcaoConta == 1) {
 			System.out.println("Digite sua chave Pix: ");
-			String chavePix = inputs.nextLine();
+			String chavePix = input2.nextLine();
+			
 			ContaCorrente cc = new ContaCorrente(senha, numeroAgencia, numeroConta, saldo, pessoa, chavePix);
 			contasC.add(cc);
-			System.out.println("Conta corrente criada com sucesso!" + "\n Número da agência: " + cc.getNumeroAgencia()
-					+ "\n Número da conta: " + cc.getNumeroConta());
+			System.out.println("\n Conta corrente criada com sucesso!" + "\n * Número da agência: " + cc.getNumeroAgencia()
+					+ "\n * Número da conta: " + cc.getNumeroConta() + "\n * Chave pix cadastrada: " + cc.getChavePix()+ "\n");
 		} else {
 			ContaPoupanca cp = new ContaPoupanca(senha, numeroAgencia, numeroConta, saldo, pessoa);
 			contasP.add(cp);
-			System.out.println("Conta poupança criada com sucesso!" + "\n Número da agência: " + cp.getNumeroAgencia()
-					+ "\n Número da conta: " + cp.getNumeroConta());
+			System.out.println("\n Conta poupança criada com sucesso!" + "\n Número da agência: " + cp.getNumeroAgencia()
+					+ "\n Número da conta: " + cp.getNumeroConta()+ "\n");
 		}
 	}
 
@@ -100,8 +101,6 @@ public class Sistema {
 		
 		System.out.println("Que tipo de conta deseja acessar? \n1. Conta Corrente \n2. Conta Poupanca");
 		int opcaoConta = input.nextInt();
-		double saldo = 0.0;		
-
 		if (opcaoConta == 1) {
 			for (ContaCorrente contaCorrente : contasC) {
 				if (contaCorrente.getNumeroAgencia() == numeroAgencia) {
@@ -137,9 +136,9 @@ public class Sistema {
 		}
 	}
 
-	public static void menuContaCorrente(ContaCorrente conta) {
-		
+	public static void menuContaCorrente(ContaCorrente conta) {		
 		Scanner input = new Scanner(System.in);
+		Scanner input2 = new Scanner(System.in);
 		int opcao;
 
 		do {
@@ -155,34 +154,46 @@ public class Sistema {
 
 			switch (opcao) {
 			case 1:
+				System.out.println("O saldo em conta é de R$" + conta.getSaldo() + "\n");
 				conta.getSaldo();
 
 				break;
 
 			case 2:
 				System.out.println("Digite o valor do saque: ");
-				double valor = input.nextDouble();
+				double valor = input2.nextDouble();
 				conta.sacar(valor);
 
 				break;
 
 			case 3:
 				System.out.println("Digite o valor do depósito: ");
-				double valor1 = input.nextDouble();
+				double valor1 = input2.nextDouble();
 				conta.depositar(valor1);
 
 				break;
 
-			case 4:
+			case 4:				
 				System.out.println("Digite o valor do pix: ");
 				double valor2 = input.nextDouble();
-				System.out.println("Digite a chave pix: ");
+				
+				//System.out.println("Digite a chave pix: ");
 				String chavePix = input.nextLine();
-
-				conta.enviaPix(valor2, contasC, chavePix);
-
+				
+				System.out.println("Confirma o envio do pix? \n1. Sim \n2. Não");
+				int confirma = input.nextInt();
+				
+				if (confirma == 1) {
+					conta.enviaPix(valor2, contasC, chavePix);
+					System.out.println("Seu pix foi realizado com sucesso. Saldo em conta: R$" + (conta.getSaldo()-valor2)+ "\n");
+				} else {
+					System.out.println("Seu pix não foi realizado. Saldo insuficiente");
+					
+					break;
+				}
+			
 				break;
-
+				
 			case 5:
 				conta.encerrarConta(conta, contasC);
 
@@ -196,7 +207,6 @@ public class Sistema {
 	}
 
 	public static void menuContaPoupanca(ContaPoupanca conta) {
-		
 		Scanner input = new Scanner(System.in);
 		int opcao;
 
@@ -212,8 +222,9 @@ public class Sistema {
 
 			switch (opcao) {
 			case 1:
+				System.out.println("O saldo em conta é de R$" + conta.getSaldo() + "\n");
 				conta.getSaldo();
-
+				
 				break;
 
 			case 2:

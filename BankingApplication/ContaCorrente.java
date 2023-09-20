@@ -21,9 +21,9 @@ public class ContaCorrente extends Conta {
 	public void depositar(double valor) {
 		if(valor>0) {
 			setSaldo(getSaldo() + valor);
-			System.out.println("Seu depósito foi realizado com sucesso. Saldo em conta: R$ " + getSaldo());
+			System.out.println("Seu depósito foi realizado com sucesso. Saldo em conta: R$ " + getSaldo() + "\n");
 		}else {
-			System.out.println("Seu depósito não foi realizado");
+			System.out.println("Seu depósito não foi realizado"+ "\n");
 		}
 	}
 	
@@ -32,9 +32,9 @@ public class ContaCorrente extends Conta {
 			if(contaCorrente.getChavePix() == chavePix) {
 				if(contaCorrente.getSaldo() >= valor) {
 					setSaldo(getSaldo() + valor);
-					System.out.println("Seu pix foi realizado com sucesso. Saldo em conta: R$" + getSaldo());
+					System.out.println("Seu pix foi realizado com sucesso. Saldo em conta: R$" +getSaldo()+ "\n");
 				}else {
-					System.out.println("Seu pix não foi realizado. Saldo insuficiente");
+					System.out.println("Seu pix não foi realizado. Saldo insuficiente" + "\n");
 				}
 			}
 		}
@@ -43,15 +43,9 @@ public class ContaCorrente extends Conta {
 	public void sacar(double valor) {
 		if(valor > 0 && this.getSaldo() >= valor) {
 			setSaldo(getSaldo()-valor);
-			System.out.println("Saque realizado com sucesso " + getSaldo());
+			System.out.println("Saque realizado com sucesso. Saldo em conta: R$" +getSaldo()+ "\n");
 		}else {
-			System.out.println("Seu saque não foi realizado. Saldo insuficiente");
+			System.out.println("Seu saque não foi realizado. Saldo insuficiente" + "\n");
 		}
 	}
-
 }
-
-
- 
- 
-
